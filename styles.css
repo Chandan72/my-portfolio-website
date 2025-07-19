@@ -288,6 +288,18 @@ section {
     color: #c3e1ff;
 }
 
+.skill-icon {
+    display: inline-block;
+    font-size: 1.35em;
+    vertical-align: middle;
+    margin-right: 10px;
+    filter: drop-shadow(0 1px 2px #23252655);
+    transition: transform 0.2s;
+}
+.skills-container li:hover .skill-icon {
+    transform: scale(1.18) rotate(-8deg);
+}
+
 .project-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
