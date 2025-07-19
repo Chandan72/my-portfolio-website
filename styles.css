@@ -40,12 +40,21 @@ a:hover {
 }
 
 header {
-    position: fixed;
+    position: sticky;
     top: 0;
     width: 100%;
-    background: #fff;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    z-index: 1000;
+    z-index: 100;
+    background: rgba(34,36,38,0.6);
+    backdrop-filter: blur(16px);
+    box-shadow: 0 2px 16px rgba(0,0,0,0.18);
+    transition: padding 0.3s, background 0.3s, box-shadow 0.3s;
+    padding: 32px 0 0 0;
+}
+
+header.shrink {
+    padding: 12px 0 0 0;
+    background: rgba(34,36,38,0.85);
+    box-shadow: 0 2px 24px rgba(0,0,0,0.28);
 }
 
 nav {
@@ -65,22 +74,41 @@ nav {
 
 .nav-links {
     display: flex;
+    gap: 32px;
     list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
 .nav-links li {
-    margin-left: 2rem;
+    position: relative;
 }
 
 .nav-links a {
+    color: #e0e0e0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding: 8px 0;
     text-decoration: none;
-    color: #333;
-    font-weight: 500;
-    transition: color 0.3s;
+    transition: color 0.2s;
+    display: inline-block;
 }
 
-.nav-links a:hover {
-    color: #007bff;
+.nav-links a::after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #38b2ac 0%, #6ee7b7 100%);
+    border-radius: 2px;
+    transition: width 0.3s cubic-bezier(.77,0,.175,1);
+}
+
+.nav-links a:hover::after {
+    width: 100%;
 }
 
 /* Fullscreen hero section styles */
@@ -324,5 +352,43 @@ section {
     .hero-content {
         max-width: 95vw;
         padding: 0 8px;
+    }
+    .nav-links {
+        gap: 16px;
+    }
+    header {
+        padding: 16px 0 0 0;
+    }
+    header.shrink {
+        padding: 6px 0 0 0;
+    }
+}
+
+.section-reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(.77,0,.175,1), transform 0.8s cubic-bezier(.77,0,.175,1);
+}
+.section-reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Staggered effect for child elements */
+.section-reveal.visible > * {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: sectionChildFadeUp 0.7s cubic-bezier(.77,0,.175,1) forwards;
+}
+.section-reveal.visible > *:nth-child(1) { animation-delay: 0.1s; }
+.section-reveal.visible > *:nth-child(2) { animation-delay: 0.25s; }
+.section-reveal.visible > *:nth-child(3) { animation-delay: 0.4s; }
+.section-reveal.visible > *:nth-child(4) { animation-delay: 0.55s; }
+.section-reveal.visible > *:nth-child(5) { animation-delay: 0.7s; }
+
+@keyframes sectionChildFadeUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
